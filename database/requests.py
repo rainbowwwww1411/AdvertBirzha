@@ -21,3 +21,15 @@ async def get_user(tg_id):
 async def upd_name(tg_id, name):
     async with engine.begin() as conn:
         await conn.execute(update(md.User).where(md.User.tg_id==tg_id).values(name=name))
+        
+async def get_advs_buy():
+    async with async_session() as session:
+        return await session.scalars(select(md.AdvBuy))
+    
+async def get_advs_sell():
+    async with async_session() as session:
+        return await session.scalars(select(md.AdvSell))
+    
+async def get_deals():
+    async with async_session() as session:
+        return await session.scalars(select(md.Deal))

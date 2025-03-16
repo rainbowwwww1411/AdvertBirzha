@@ -40,6 +40,7 @@ class Deal(Base):
     __tablename__ = 'deals'
     
     id: Mapped[int] = mapped_column(primary_key=True)
+    tg_id = mapped_column(BigInteger)
     post_id: Mapped[str] = mapped_column(String(300))
     adv_id: Mapped[str] = mapped_column(String(300))
     
@@ -47,6 +48,7 @@ class AdvBuy(Base):
     __tablename__ = 'advsbuy'
     
     id: Mapped[int] = mapped_column(primary_key=True)
+    tg_id = mapped_column(BigInteger)
     post_id: Mapped[str] = mapped_column(String(300))
     theme: Mapped[str] = mapped_column(String(300))
     money: Mapped[str] = mapped_column(String(300))
@@ -64,6 +66,7 @@ class AdvSell(Base):
     __tablename__ = 'advssell'
     
     id: Mapped[int] = mapped_column(primary_key=True)
+    tg_id = mapped_column(BigInteger)
     theme: Mapped[str] = mapped_column(String(300))
     money: Mapped[str] = mapped_column(String(300))
     costforsub: Mapped[str] = mapped_column(String(300))
