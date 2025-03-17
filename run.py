@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 from handlers.start import srouter
 from handlers.profile import prouter
 from handlers.advs import arouter
+from handlers.info import irouter
+from handlers.delete import drouter
 
 async def main():
     await async_main()
@@ -18,6 +20,8 @@ async def main():
         dp.include_router(srouter)
         dp.include_router(prouter)
         dp.include_router(arouter)
+        dp.include_router(irouter)
+        dp.include_router(drouter)
         await dp.start_polling(bot)
 
 if __name__ == "__main__":

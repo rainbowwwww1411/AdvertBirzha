@@ -7,6 +7,6 @@ async def start():
     kb.add(InlineKeyboardButton(text="📊 Биржа", callback_data="advs"))
     kb.add(InlineKeyboardButton(text="👤 Профиль", callback_data="profile"))
     row.append(2)
-    kb.add(InlineKeyboardButton(text="⚙️ Настройки", callback_data="settings"))
+    kb.add(InlineKeyboardButton(text="📚 Информация", callback_data="info"))
     row.append(1)
     return kb.adjust(*row).as_markup()
