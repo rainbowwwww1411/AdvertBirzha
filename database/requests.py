@@ -17,7 +17,11 @@ async def get_users():
 async def get_user(tg_id):
     async with async_session() as session:
         return await session.scalars(select(md.User).where(md.User.tg_id==tg_id))
-    
+
+async def get_ban_user(tg_id):
+    async with async_session() as session:
+        return await session.scalars(select(md.BannedUser).where(md.BannedUser.tg_id==tg_id))
+
 async def upd_name(tg_id, name):
     async with engine.begin() as conn:
         await conn.execute(update(md.User).where(md.User.tg_id==tg_id).values(name=name))

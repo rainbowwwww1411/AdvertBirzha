@@ -27,6 +27,14 @@ class User(Base):
     ref_count: Mapped[str] = mapped_column(String(300))
     invite_from: Mapped[str] = mapped_column(String(300))
     
+class BannedUser(Base):
+    __tablename__ = 'banned_users'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    tg_id = mapped_column(BigInteger, unique=True)
+    date: Mapped[str] = mapped_column(String(300)) # 00.00.0000 00:00
+    reason: Mapped[str] = mapped_column(String(300))
+
+    
 class Post(Base):
     __tablename__ = 'posts'
     

@@ -11,6 +11,16 @@ async def info():
     row.append(2)
     return kb.adjust(*row).as_markup()
 
+async def rules():
+    kb = InlineKeyboardBuilder()
+    row = []
+    kb.add(InlineKeyboardButton(text="🧠 Правила", callback_data="rules"))
+    kb.add(InlineKeyboardButton(text="🆘 Тех. поддержка", url="t.me/durov"))
+    row.append(2)
+    kb.add(InlineKeyboardButton(text="❌ Понятно", callback_data="delete"))
+    row.append(1)
+    return kb.adjust(*row).as_markup()
+
 async def delete_msg():
     kb = InlineKeyboardBuilder()
     row = []

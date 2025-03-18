@@ -11,6 +11,7 @@ from handlers.profile import prouter
 from handlers.advs import arouter
 from handlers.info import irouter
 from handlers.delete import drouter
+from ban import brouter
 
 async def main():
     await async_main()
@@ -22,6 +23,7 @@ async def main():
         dp.include_router(arouter)
         dp.include_router(irouter)
         dp.include_router(drouter)
+        dp.include_router(brouter)
         await dp.start_polling(bot)
 
 if __name__ == "__main__":

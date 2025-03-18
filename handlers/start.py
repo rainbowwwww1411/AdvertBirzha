@@ -35,3 +35,7 @@ async def getname(message: types.Message, state: FSMContext, bot: Bot):
     else:
         await message.answer("Введите ваше имя/псевдоним (не более 30 символов, а также будет выдаваться бан за мат/ругань и т.д.):")
         await state.set_state(get.name)
+        
+@srouter.callback_query(F.data=="to_main")
+async def to_main(callback: types.CallbackQuery):
+    await callback.message.edit_text("Покупайте и продавайте рекламу безопасно и автоматически с нашим сервисом.\n\nПодписывайтесь на наш канал и вступайте в наш чат.", reply_markup=await ikb.start())
