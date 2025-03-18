@@ -4,12 +4,12 @@ import inlineKeyboards.infoikb as ikb
 from aiogram import Router, Bot, F
 from aiogram.filters import CommandStart, Command
 from aiogram.fsm.context import FSMContext
-from aiogram import types
+from aiogram.types import CallbackQuery, Message
 
 irouter = Router()
 
 @irouter.callback_query(F.data=='info')
-async def info(callback: types.CallbackQuery):
+async def info(callback: CallbackQuery):
     await callback.message.edit_text("""<b>Биржа</b> для торговли рекламой внутри мессенджера Telegram.
 Мы предоставляем услуги гаранта при проведении сделок, а также мы поможем вам с закупом рекламы.
 
@@ -22,7 +22,7 @@ async def info(callback: types.CallbackQuery):
 Полезная информация:""", reply_markup=await ikb.info())
     
 @irouter.callback_query(F.data=='instructions')
-async def instructions(callback: types.CallbackQuery):
+async def instructions(callback: CallbackQuery):
     await callback.message.answer("""<b>Инструкция использования бота:</b>
 
 1. Нажать на кнопку "Биржа", выбрать необходимые действия.
@@ -36,7 +36,7 @@ async def instructions(callback: types.CallbackQuery):
 5. При необходимости обратитесь в поддержку и подробно опишите ситуацию.""", reply_markup=await ikb.delete_msg())
     
 @irouter.callback_query(F.data=='rules')
-async def rules(callback: types.CallbackQuery):
+async def rules(callback: CallbackQuery):
     await callback.message.answer("""<b>Правила:</b>
 
 1. Администрация гарантирует безопасность при проведении сделок и гарантирует целостность ваших средств.
@@ -62,7 +62,7 @@ async def rules(callback: types.CallbackQuery):
 - 4.4 Не были выполнены все условия сделки. Продавец или не имеет возможностей для выполнения или отказывается.""", reply_markup=await ikb.delete_msg())
     
 @irouter.message(Command("rules"))
-async def rules(message: types.Message):
+async def rules(message: Message):
     await message.answer("""<b>Правила:</b>
 
 1. Администрация гарантирует безопасность при проведении сделок и гарантирует целостность ваших средств.
