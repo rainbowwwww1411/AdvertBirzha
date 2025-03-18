@@ -22,6 +22,6 @@ async def advs(tg_id):
     if response:
         kb.add(InlineKeyboardButton(text="Мои объявление", callback_data="my_announcement"))
     row.append(1)
-    kb.add(InlineKeyboardButton(text="Назад", callback_data="to_main"))
+    kb.add(InlineKeyboardButton(text="« Назад", callback_data="to_main"))
     row.append(1)
     return kb.adjust(*row).as_markup()
