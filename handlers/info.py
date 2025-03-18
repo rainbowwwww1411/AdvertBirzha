@@ -1,6 +1,7 @@
 import database.requests as rq
 import os
 import inlineKeyboards.infoikb as ikb
+from inlineKeyboards.delete_message import delete_msg
 from aiogram import Router, Bot, F
 from aiogram.filters import CommandStart, Command
 from aiogram.fsm.context import FSMContext
@@ -33,7 +34,7 @@ async def instructions(callback: CallbackQuery):
 
 4. Не подтверждайте сделку до её выполнения, а только когда все условия выполнены.
 
-5. При необходимости обратитесь в поддержку и подробно опишите ситуацию.""", reply_markup=await ikb.delete_msg())
+5. При необходимости обратитесь в поддержку и подробно опишите ситуацию.""", reply_markup=await delete_msg())
     
 @irouter.callback_query(F.data=='rules')
 async def rules(callback: CallbackQuery):
@@ -59,7 +60,7 @@ async def rules(callback: CallbackQuery):
 - 4.1 Продавец был забанен.
 - 4.2 Игнор до 3 дней со стороны продавца.
 - 4.3 Продавец был заподозрен в накрутке или переливании иного трафика.
-- 4.4 Не были выполнены все условия сделки. Продавец или не имеет возможностей для выполнения или отказывается.""", reply_markup=await ikb.delete_msg())
+- 4.4 Не были выполнены все условия сделки. Продавец или не имеет возможностей для выполнения или отказывается.""", reply_markup=await delete_msg())
     
 @irouter.message(Command("rules"))
 async def rules(message: Message):

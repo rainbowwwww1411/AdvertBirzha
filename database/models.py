@@ -22,7 +22,6 @@ class User(Base):
     tg_id = mapped_column(BigInteger, unique=True)
     name: Mapped[str] = mapped_column(String(300))
     balance: Mapped[str] = mapped_column(String(300))
-    rating: Mapped[str] = mapped_column(String(300))
     deals_count: Mapped[str] = mapped_column(String(300))
     ref_count: Mapped[str] = mapped_column(String(300))
     invite_from: Mapped[str] = mapped_column(String(300))
