@@ -2,7 +2,6 @@ from typing import Callable, Dict, Any, Awaitable
 from aiogram import BaseMiddleware, Router, Bot
 from aiogram.types import Message, TelegramObject, CallbackQuery
 from aiogram.filters import Command
-from aiogram.enums import ChatMemberStatus
 from sqlalchemy import select, delete
 from database.models import async_session, BannedUser
 from datetime import datetime

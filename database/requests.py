@@ -17,6 +17,10 @@ async def get_users():
 async def get_user(tg_id):
     async with async_session() as session:
         return await session.scalars(select(md.User).where(md.User.tg_id==tg_id))
+    
+async def update_balance(tg_id, balance):
+    async with engine.begin() as conn:
+        return await conn.execute(update(md.User).where(md.User.tg_id==tg_id).values(balance=balance))
 
 async def get_ban_user(tg_id):
     async with async_session() as session:
@@ -59,3 +63,34 @@ async def get_user_rating(tg_id: int) -> float:
             all_rate += int(i)
         rating = all_rate/len(rating_list)
         return rating
+    
+async def create_pay(tg_id, invoice_id, date, sum, method, status):
+    async with async_session() as session:
+        session.add(md.pay(tg_id=tg_id, invoice_id=invoice_id, date=date, sum=sum, method=method, status=status))
+        await session.commit()
+        
+async def delete_pay(id):
+    async with engine.begin() as conn:
+        await conn.execute(delete(md.pay).where(md.pay.id==id))
+        
+async def update_pay(id, status):
+    async with engine.begin() as conn:
+        await conn.execute(update(md.pay).where(md.pay.id==id).values(status=status))
+        
+async def get_pays(method):
+    async with async_session() as session:
+        return await session.scalars(select(md.pay).where(md.pay.method==method))
+    
+async def get_pay(invoice_id, method):
+    async with async_session() as session:
+        return await session.scalars(select(md.pay).where(md.pay.invoice_id==invoice_id).where(md.pay.method==method))
+    
+async def check_invoice_id(invoice_id, method: str) -> bool:
+    async with async_session() as session:
+        stmt = select(exists().where(md.pay.invoice_id==invoice_id).where(md.pay.method==method))
+        reviews_bool = await session.scalar(stmt)
+        
+        if not reviews_bool:
+            return False
+        else:
+            return True

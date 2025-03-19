@@ -1,10 +1,7 @@
-import database.requests as rq
-import os
 import inlineKeyboards.infoikb as ikb
 from inlineKeyboards.delete_message import delete_msg
-from aiogram import Router, Bot, F
-from aiogram.filters import CommandStart, Command
-from aiogram.fsm.context import FSMContext
+from aiogram import Router, F
+from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
 
 irouter = Router()

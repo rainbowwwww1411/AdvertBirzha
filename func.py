@@ -18,3 +18,4 @@ async def check_adv(tg_id):
                 break
     
     return response
+

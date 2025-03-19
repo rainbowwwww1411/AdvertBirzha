@@ -91,10 +91,11 @@ class pay(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True)
     tg_id = mapped_column(BigInteger)
+    invoice_id: Mapped[str] = mapped_column(String(300))
+    date: Mapped[str] = mapped_column(String(300))
     sum: Mapped[str] = mapped_column(String(300))
-    currency: Mapped[str] = mapped_column(String(300))
     method: Mapped[str] = mapped_column(String(300))
-    status: Mapped[str] = mapped_column(String(300)) # Successful/Unsuccessful
+    status: Mapped[str] = mapped_column(String(300)) # for CryptoBot active/paid
     
 class withdraw(Base):
     __tablename__ = 'withdraws'

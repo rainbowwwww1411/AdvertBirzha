@@ -2,3 +2,5 @@ from aiogram.fsm.state import State, StatesGroup
 
 class get(StatesGroup):
     name = State()
+    sum = State()
+    method = State()
