@@ -12,6 +12,7 @@ from handlers.advs import arouter
 from handlers.info import irouter
 from handlers.delete import drouter
 from handlers.methods.cryptobot import cbrouter, check_payments_task
+from handlers.methods.crypto import nprouter, check_payments_task_np
 from ban import brouter
 
 
@@ -27,7 +28,9 @@ async def main():
         dp.include_router(drouter)
         dp.include_router(brouter)
         dp.include_router(cbrouter)
+        dp.include_router(nprouter)
         asyncio.create_task(check_payments_task())
+        asyncio.create_task(check_payments_task_np())
         await dp.start_polling(bot)
 
 if __name__ == "__main__":
