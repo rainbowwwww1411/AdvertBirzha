@@ -10,7 +10,7 @@ from states import get
 from ban import BansMiddleware
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
-from datetime import datetime, timedelta
+from datetime import datetime
 
 cryptopay = AioCryptoPay(
     token=os.getenv("CRYPTOPAY_TOKEN"),
@@ -33,9 +33,6 @@ async def sum(message: Message, state: FSMContext):
         await message.answer("Введите корректную сумму.", reply_markup=await ikb.back())
         return
     
-    data = await state.get_data()
-    method = data["method"]
-
     try:
             
         date = datetime.now()
@@ -46,7 +43,7 @@ async def sum(message: Message, state: FSMContext):
         await message.answer(
             f"✅ Счет на {amount} RUB создан!\n"
             "➖➖➖➖➖➖➖➖➖➖\n"
-            "⚠️ Оплатите счет в течение 24 часов\n"
+            "⚠️ Оплатите счет в течение 12 часов\n"
             "Баланс обновится автоматически после платежа",
             reply_markup=await ikb.pay_next(invoice.bot_invoice_url)
         )
@@ -56,7 +53,7 @@ async def sum(message: Message, state: FSMContext):
 
     await state.clear()
 
-async def check_payments_task():
+async def check_payments_task(): # Auto check complete pays
     async with Bot(token=os.getenv('TOKEN'), default=DefaultBotProperties(parse_mode=ParseMode.HTML)) as bot:
         while True:
             try:
@@ -70,30 +67,22 @@ async def check_payments_task():
                         pays_data = await rq.get_pay(invoice.invoice_id, "CryptoBot")
                         
                         for pay in pays_data:
-                            current_time = datetime.now()
-                            date_format = "%Y-%m-%d %H:%M:%S.%f"
-                            start_time = datetime.strptime(pay.date, date_format)
-                            time_difference = current_time - start_time
-                            
-                            if time_difference >= timedelta(hours=24):
-                                await rq.delete_pay(pay.id)
-                            else:
-                                if invoice.status == 'paid' and pay.status != 'paid':
-                                    user_id = pay.tg_id
+                            if invoice.status == 'paid' and pay.status != 'paid':
+                                user_id = pay.tg_id
                                         
-                                    await rq.update_pay(pay.id, 'paid')
+                                await rq.update_pay(pay.id, 'paid')
                                         
-                                    user_data = await rq.get_user(user_id)
-                                    for user in user_data:
-                                        new_balance = float(user.balance)+float(invoice.amount)
-                                        await rq.update_balance(user.tg_id, new_balance)
+                                user_data = await rq.get_user(user_id)
+                                for user in user_data:
+                                    new_balance = float(user.balance)+float(invoice.amount)
+                                    await rq.update_balance(user.tg_id, new_balance)
                                         
-                                    await bot.send_message(
-                                        chat_id=user_id,
-                                        text=f"✅ Платеж на {invoice.amount} RUB успешно получен!",
-                                        reply_markup=await ikb.back()
-                                    )
-                                    print(f"Payment received from user {user_id}")
+                                await bot.send_message(
+                                    chat_id=user_id,
+                                    text=f"✅ Платеж на {invoice.amount} RUB успешно получен!",
+                                    reply_markup=await ikb.back()
+                                )
+                                print(f"Payment received from user {user_id}")
                             
             except Exception as e:
                 print(f"Error checking payments: {e}")

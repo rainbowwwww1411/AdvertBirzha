@@ -81,6 +81,10 @@ async def get_pays(method):
     async with async_session() as session:
         return await session.scalars(select(md.pay).where(md.pay.method==method))
     
+async def get_all_pays():
+    async with async_session() as session:
+        return await session.scalars(select(md.pay))
+    
 async def get_pay(invoice_id, method):
     async with async_session() as session:
         return await session.scalars(select(md.pay).where(md.pay.invoice_id==invoice_id).where(md.pay.method==method))
