@@ -36,26 +36,23 @@ async def sum(message: Message, state: FSMContext):
     data = await state.get_data()
     method = data["method"]
 
-    if method == "CryptoBot":
-        try:
+    try:
             
-            date = datetime.now()
+        date = datetime.now()
             
-            invoice=await create_invoice(amount, user_id)
-            await rq.create_pay(user_id, invoice.invoice_id, date, invoice.amount, "CryptoBot", "active")
+        invoice=await create_invoice(amount, user_id)
+        await rq.create_pay(user_id, invoice.invoice_id, date, invoice.amount, "CryptoBot", "active")
 
-            await message.answer(
-                f"✅ Счет на {amount} RUB создан!\n"
-                "➖➖➖➖➖➖➖➖➖➖\n"
-                "⚠️ Оплатите счет в течение 24 часов\n"
-                "Баланс обновится автоматически после платежа",
-                reply_markup=await ikb.pay_next(invoice.bot_invoice_url)
-            )
-        except Exception as e:
-            print(e)
-            await message.answer("⚠️ Произошла ошибка. Попробуйте позже.", reply_markup=await ikb.back())
-    else:
-        await message.answer("🚧 Этот метод оплаты временно недоступен", reply_markup=await ikb.back())
+        await message.answer(
+            f"✅ Счет на {amount} RUB создан!\n"
+            "➖➖➖➖➖➖➖➖➖➖\n"
+            "⚠️ Оплатите счет в течение 24 часов\n"
+            "Баланс обновится автоматически после платежа",
+            reply_markup=await ikb.pay_next(invoice.bot_invoice_url)
+        )
+    except Exception as e:
+        print(e)
+        await message.answer("⚠️ Произошла ошибка. Попробуйте позже.", reply_markup=await ikb.back())
 
     await state.clear()
 

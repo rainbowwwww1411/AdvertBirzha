@@ -52,10 +52,10 @@ async def pay(callback: CallbackQuery, state: FSMContext):
         await state.set_state(get.sum)
     elif method=="NowPayments":
         await callback.message.edit_text("Введите сумму для оплаты в рублях (минимально 100руб):", reply_markup=await ikb.back())
-        await state.set_state(get.sum)
+        await state.set_state(get.sum_nowp)
     elif method=="Stars":
         await callback.message.edit_text("Введите сумму для оплаты в рублях (минимально 100руб):", reply_markup=await ikb.back())
-        await state.set_state(get.sum)
+        await state.set_state(get.sum_stars)
 
 
 
