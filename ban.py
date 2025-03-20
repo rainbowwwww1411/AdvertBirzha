@@ -60,8 +60,6 @@ class BansMiddleware(BaseMiddleware):
         return await handler(event, data)
 
 
-
-# Инициализация роутера и middleware
 brouter = Router()
 brouter.message.middleware(BansMiddleware())
 
