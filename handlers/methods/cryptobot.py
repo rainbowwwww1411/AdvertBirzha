@@ -11,17 +11,14 @@ from ban import BansMiddleware
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 from datetime import datetime, timedelta
-import time
 
 cryptopay = AioCryptoPay(
     token=os.getenv("CRYPTOPAY_TOKEN"),
     network=Networks.MAIN_NET
 )
 
-
 cbrouter = Router()
 cbrouter.callback_query.middleware(BansMiddleware())
-
 
 @cbrouter.message(get.sum)
 async def sum(message: Message, state: FSMContext):
