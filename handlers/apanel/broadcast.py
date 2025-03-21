@@ -10,6 +10,7 @@ from ban import BansMiddleware
 from admin import IsAdmin2
 from settings import ADMINS
 from datetime import datetime
+from aiogram.exceptions import TelegramRetryAfter, TelegramForbiddenError
 
 broadcastrouter = Router()
 broadcastrouter.callback_query.middleware(BansMiddleware())
@@ -134,6 +135,8 @@ async def broadcast_text(bot: Bot, text: str, reply_markup=None):
                 reply_markup=reply_markup
             )
             successful += 1
+        except TelegramRetryAfter:
+            await asyncio.sleep(10)
         except Exception as e:
             unsuccessful += 1
             print(f"Error: {e}")
@@ -142,7 +145,7 @@ async def broadcast_text(bot: Bot, text: str, reply_markup=None):
     for admin in ADMINS:
         await bot.send_message(
                         chat_id=admin,
-                        text=f"Рассылка была завершена. Время рассылки: {time}.\nУспешно: {successful}\nНеуспешно: {unsuccessful}",
+                        text=f"Рассылка была завершена.\nВремя рассылки: {time}.\nУспешно: {successful}\nНеуспешно: {unsuccessful}",
                         reply_markup=await ikb.delete_msg())
 
 async def broadcast_photo(bot: Bot, photo: str, caption: str, reply_markup=None):
@@ -161,6 +164,8 @@ async def broadcast_photo(bot: Bot, photo: str, caption: str, reply_markup=None)
                 reply_markup=reply_markup
             )
             successful += 1
+        except TelegramRetryAfter:
+            await asyncio.sleep(10)
         except Exception as e:
             unsuccessful += 1
             print(f"Error: {e}")
@@ -170,5 +175,5 @@ async def broadcast_photo(bot: Bot, photo: str, caption: str, reply_markup=None)
     for admin in ADMINS:
         await bot.send_message(
                         chat_id=admin,
-                        text=f"Рассылка была завершена. Время рассылки: {time}.\nУспешно: {successful}\nНеуспешно: {unsuccessful}",
+                        text=f"Рассылка была завершена.\nВремя рассылки: {time}.\nУспешно: {successful}\nНеуспешно: {unsuccessful}",
                         reply_markup=await ikb.delete_msg())

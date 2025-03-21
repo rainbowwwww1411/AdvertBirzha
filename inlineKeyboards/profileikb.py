@@ -26,9 +26,9 @@ async def back():
 async def pay_methods():
     kb = InlineKeyboardBuilder()
     row = []
-    kb.add(InlineKeyboardButton(text="Crypto", callback_data="pay_NowPayments"))
-    kb.add(InlineKeyboardButton(text="CryptoBot", callback_data="pay_CryptoBot"))
-    kb.add(InlineKeyboardButton(text="Звёзды", callback_data="pay_Stars"))
+    kb.add(InlineKeyboardButton(text="🪙 Crypto", callback_data="pay_NowPayments"))
+    kb.add(InlineKeyboardButton(text="💸 CryptoBot", callback_data="pay_CryptoBot"))
+    kb.add(InlineKeyboardButton(text="⭐️ Звёзды", callback_data="pay_Stars"))
     kb.add(InlineKeyboardButton(text="« Назад", callback_data="profile"))
     row.append(1)
     return kb.adjust(*row).as_markup()
