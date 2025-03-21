@@ -8,6 +8,7 @@ from datetime import datetime
 import database.requests as rq
 from admin import IsAdmin
 import inlineKeyboards.infoikb as ikb
+import os
 
 
 class Database:
@@ -63,7 +64,7 @@ class BansMiddleware(BaseMiddleware):
 brouter = Router()
 brouter.message.middleware(BansMiddleware())
 
-@brouter.message(Command("ban"), IsAdmin(6299587911))
+@brouter.message(Command("ban"), IsAdmin(os.getenv('ADMINS')))
 async def ban_user(message: Message, bot: Bot):
     try:
         parts = message.text.split()
@@ -74,7 +75,7 @@ async def ban_user(message: Message, bot: Bot):
     except (IndexError, ValueError):
         await message.answer("Использование: /ban <tg_id> [причина]")
 
-@brouter.message(Command("unban"), IsAdmin(6299587911))
+@brouter.message(Command("unban"), IsAdmin(os.getenv('ADMINS')))
 async def unban_user(message: Message, bot: Bot):
     try:
         tg_id = int(message.text.split()[1])

@@ -1,11 +1,10 @@
 from aiogram.filters import BaseFilter
-from typing import List, Union
+from typing import List, Union, Tuple
 from aiogram.types import Message, CallbackQuery
 
-# Админка на message
-class IsAdmin(BaseFilter):
+class IsAdmin(BaseFilter): # Админка на message
     
-    def __init__(self, user_ids: Union[int, List[int]]) -> None:
+    def __init__(self, user_ids: Union[int, List[int], Tuple[int]]) -> None:
         self.user_ids = user_ids
         
     async def __call__(self, message: Message) -> bool:
@@ -13,10 +12,9 @@ class IsAdmin(BaseFilter):
             return message.from_user.id == self.user_ids
         return message.from_user.id in self.user_ids
 
-# Админка на callback
-class IsAdmin2(BaseFilter):
+class IsAdmin2(BaseFilter): # Админка на callback
     
-    def __init__(self, user_ids: Union[int, List[int]]) -> None:
+    def __init__(self, user_ids: Union[int, List[int], Tuple[int]]) -> None:
         self.user_ids = user_ids
         
     async def __call__(self, callback: CallbackQuery) -> bool:

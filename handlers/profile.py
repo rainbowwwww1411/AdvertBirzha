@@ -13,7 +13,6 @@ cryptopay = AioCryptoPay(
     token=os.getenv("CRYPTOPAY_TOKEN"),
     network=Networks.MAIN_NET
 )
-temp_storage = {}
 
 prouter = Router()
 prouter.callback_query.middleware(BansMiddleware())
@@ -38,7 +37,6 @@ async def referal_system(callback: CallbackQuery, bot: Bot):
     link = await create_start_link(bot,str(callback.from_user.id), encode=True)
     await callback.message.edit_text(f"🔗 Ваша реферальная ссылка: <code>{link}</code>\n\nВы получите 1% за выводы реферала.", reply_markup=await ikb.back())
     
-
 @prouter.callback_query(F.data=="top_up_balance")
 async def top_up_balance(callback: CallbackQuery):
     await callback.message.edit_text("Выберите метод пополнения:", reply_markup=await ikb.pay_methods())

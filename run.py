@@ -8,9 +8,12 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from dotenv import load_dotenv
 from handlers.start import srouter
 from handlers.profile import prouter
+from handlers.withdraw import wrouter
 from handlers.advs import arouter
 from handlers.info import irouter
 from handlers.delete import drouter
+from handlers.apanel.apanel import adminrouter
+from handlers.apanel.broadcast import broadcastrouter
 from handlers.methods.cryptobot import cbrouter, check_payments_task
 from handlers.methods.crypto import nprouter, check_payments_task_np
 from handlers.methods.stars import psrouter
@@ -32,6 +35,9 @@ async def main():
         dp.include_router(cbrouter)
         dp.include_router(nprouter)
         dp.include_router(psrouter)
+        dp.include_router(wrouter)
+        dp.include_router(adminrouter)
+        dp.include_router(broadcastrouter)
         asyncio.create_task(auto_clean())
         asyncio.create_task(check_payments_task())
         asyncio.create_task(check_payments_task_np())

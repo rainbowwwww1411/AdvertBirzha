@@ -2,10 +2,7 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import BigInteger, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import text
-from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine, AsyncSession
-from sqlalchemy import select, func
-from sqlalchemy import delete
+from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine
 
 load_dotenv()
 engine = create_async_engine(url=os.getenv('SQLALCHEMY_URL'))
@@ -102,10 +99,12 @@ class withdraw(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True)
     tg_id = mapped_column(BigInteger)
+    username: Mapped[str] = mapped_column(String(300))
     sum: Mapped[str] = mapped_column(String(300))
     currency: Mapped[str] = mapped_column(String(300))
+    address: Mapped[str] = mapped_column(String(300))
     method: Mapped[str] = mapped_column(String(300))
-    status: Mapped[str] = mapped_column(String(300)) # Successful/Unsuccessful
+    status: Mapped[str] = mapped_column(String(300)) # active/successful/unsuccessful
     
 class Review(Base):
     __tablename__ = 'reviews'

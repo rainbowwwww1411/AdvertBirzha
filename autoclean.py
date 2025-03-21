@@ -11,8 +11,7 @@ async def auto_clean() -> None: # auto clean pays
             date_format = "%Y-%m-%d %H:%M:%S.%f"
             start_time = datetime.strptime(payment.date, date_format)
             time_difference = current_time - start_time
-            
             if time_difference >= timedelta(hours=12):
                 await rq.delete_pay(payment.id)
-            await asyncio.sleep(60)
+        await asyncio.sleep(60)
                 
