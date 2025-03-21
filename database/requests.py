@@ -1,6 +1,6 @@
 from database.models import async_session, engine
 import database.models as md
-from sqlalchemy import select, delete, update, or_, and_, exists
+from sqlalchemy import select, delete, update, exists
 
 async def set_user(tg_id, invitefrom):
     async with async_session() as session:
@@ -98,3 +98,8 @@ async def check_invoice_id(invoice_id, method: str) -> bool:
             return False
         else:
             return True
+        
+async def create_withdraw(tg_id, username: str, sum: str, currency: str, method: str, address: str) -> None:
+    async with async_session() as session:
+        session.add(md.withdraw(tg_id=tg_id, username=username, sum=sum, currency=currency, method=method, status="active", address=address))
+        await session.commit()
