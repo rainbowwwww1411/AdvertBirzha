@@ -3,3 +3,4 @@
 *.pyc
 *.pyc
 database/db.sqlite3
+settings.py
