@@ -162,7 +162,6 @@ async def broadcast_photo(bot: Bot, photo: str, caption: str, reply_markup=None)
                 reply_markup=reply_markup
             )
             successful += 1
-            await asyncio.sleep(0.00001)
         except Exception as e:
             unsuccessful += 1
             print(f"Error: {e}")
