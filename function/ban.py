@@ -6,7 +6,7 @@ from sqlalchemy import select, delete
 from database.models import async_session, BannedUser
 from datetime import datetime
 import database.requests as rq
-from admin import IsAdmin
+from function.admin import IsAdmin
 import inlineKeyboards.infoikb as ikb
 import os
 

@@ -1,6 +1,6 @@
 from aiogram import Router, Bot, F
 from aiogram.types import CallbackQuery
-from antiflood import AntiFloodMiddleware
+from function.antiflood import AntiFloodMiddleware
 
 drouter = Router()
 drouter.callback_query.middleware(AntiFloodMiddleware())

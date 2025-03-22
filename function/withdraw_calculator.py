@@ -1,4 +1,4 @@
-from check_ton_price import CoinGeckoAPI
+from function.check_ton_price import CoinGeckoAPI
 from settings import default_commission
 
 class PaymentCalculator:

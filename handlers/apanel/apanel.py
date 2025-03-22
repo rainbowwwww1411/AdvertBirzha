@@ -3,8 +3,8 @@ import inlineKeyboards.adminikb as ikb
 from aiogram import Router, F
 from aiogram.types import CallbackQuery, Message
 from aiogram.filters import Command
-from ban import BansMiddleware
-from admin import IsAdmin, IsAdmin2
+from function.ban import BansMiddleware
+from function.admin import IsAdmin, IsAdmin2
 from settings import ADMINS
 
 adminrouter = Router()

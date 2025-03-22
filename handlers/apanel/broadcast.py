@@ -6,8 +6,8 @@ import inlineKeyboards.adminikb as ikb
 from aiogram import Router, Bot, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
-from ban import BansMiddleware
-from admin import IsAdmin2
+from function.ban import BansMiddleware
+from function.admin import IsAdmin2
 from settings import ADMINS
 from datetime import datetime
 from aiogram.exceptions import TelegramRetryAfter, TelegramForbiddenError

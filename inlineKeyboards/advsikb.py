@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 import database.requests as rq
-import func as fn
+import function.func as fn
 
 async def advs(tg_id):
     kb = InlineKeyboardBuilder()

@@ -2,8 +2,8 @@ import inlineKeyboards.advsikb as ikb
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
-from ban import BansMiddleware
-from antiflood import AntiFloodMiddleware
+from function.ban import BansMiddleware
+from function.antiflood import AntiFloodMiddleware
 
 arouter = Router()
 arouter.message.middleware(AntiFloodMiddleware())

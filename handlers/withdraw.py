@@ -4,11 +4,11 @@ from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from states import get
-from ban import BansMiddleware
+from function.ban import BansMiddleware
 from settings import commission
-from check_ton_price import CoinGeckoAPI
-from withdraw_calculator import PaymentCalculator
-from antiflood import AntiFloodMiddleware
+from function.check_ton_price import CoinGeckoAPI
+from function.withdraw_calculator import PaymentCalculator
+from function.antiflood import AntiFloodMiddleware
 
 wrouter = Router()
 wrouter.message.middleware(AntiFloodMiddleware())

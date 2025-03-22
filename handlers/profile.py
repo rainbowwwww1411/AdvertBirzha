@@ -7,8 +7,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.deep_linking import create_start_link
 from states import get
-from ban import BansMiddleware
-from antiflood import AntiFloodMiddleware
+from function.ban import BansMiddleware
+from function.antiflood import AntiFloodMiddleware
 
 cryptopay = AioCryptoPay(
     token=os.getenv("CRYPTOPAY_TOKEN"),

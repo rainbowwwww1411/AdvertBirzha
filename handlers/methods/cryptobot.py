@@ -7,11 +7,11 @@ from aiogram import Router, Bot
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from states import get
-from ban import BansMiddleware
+from function.ban import BansMiddleware
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 from datetime import datetime
-from antiflood import AntiFloodMiddleware
+from function.antiflood import AntiFloodMiddleware
 
 cryptopay = AioCryptoPay(
     token=os.getenv("CRYPTOPAY_TOKEN"),

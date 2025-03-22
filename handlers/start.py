@@ -7,9 +7,9 @@ from aiogram.types import CallbackQuery, Message
 from states import get
 import inlineKeyboards.startikb as ikb
 import keyboards.startkb as kb
-from antiflood import AntiFloodMiddleware
+from function.antiflood import AntiFloodMiddleware
 import random
-from captcha import emoji_db, all_emoji, CAPTCHA_SIZE, captcha_store, TIMEOUT
+from function.captcha import emoji_db, all_emoji, CAPTCHA_SIZE, captcha_store, TIMEOUT
 import time
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 

@@ -17,9 +17,9 @@ from handlers.apanel.broadcast import broadcastrouter
 from handlers.methods.cryptobot import cbrouter, check_payments_task
 from handlers.methods.crypto import nprouter, check_payments_task_np
 from handlers.methods.stars import psrouter
-from autoclean import auto_clean
-from ban import brouter
-from captcha import captcha_cleaner
+from function.autoclean import auto_clean
+from function.ban import brouter
+from function.captcha import captcha_cleaner
 
 async def main():
     await async_main()

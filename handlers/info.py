@@ -5,7 +5,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
 from settings import commission
-from antiflood import AntiFloodMiddleware
+from function.antiflood import AntiFloodMiddleware
 
 irouter = Router()
 irouter.message.middleware(AntiFloodMiddleware())

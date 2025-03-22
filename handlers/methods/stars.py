@@ -4,9 +4,9 @@ from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, LabeledPrice, PreCheckoutQuery
 from states import get
-from ban import BansMiddleware
+from function.ban import BansMiddleware
 from datetime import datetime
-from antiflood import AntiFloodMiddleware
+from function.antiflood import AntiFloodMiddleware
 
 psrouter = Router()
 psrouter.message.middleware(AntiFloodMiddleware())
