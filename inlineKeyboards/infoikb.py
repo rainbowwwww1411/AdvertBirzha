@@ -9,8 +9,8 @@ async def info():
     kb.add(InlineKeyboardButton(text="🛠 Инструкция", callback_data="instructions"))
     kb.add(InlineKeyboardButton(text="🧠 Правила", callback_data="rules"))
     row.append(2)
-    kb.add(InlineKeyboardButton(text="« Назад", callback_data="to_main"))
-    row.append(1)
+    # kb.add(InlineKeyboardButton(text="« Назад", callback_data="to_main"))
+    # row.append(1)
     return kb.adjust(*row).as_markup()
 
 async def rules():

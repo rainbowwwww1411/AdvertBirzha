@@ -4,10 +4,11 @@ from aiocryptopay import AioCryptoPay, Networks
 import inlineKeyboards.profileikb as ikb
 from aiogram import Router, Bot, F
 from aiogram.fsm.context import FSMContext
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, Message
 from aiogram.utils.deep_linking import create_start_link
 from states import get
 from ban import BansMiddleware
+from antiflood import AntiFloodMiddleware
 
 cryptopay = AioCryptoPay(
     token=os.getenv("CRYPTOPAY_TOKEN"),
@@ -15,22 +16,44 @@ cryptopay = AioCryptoPay(
 )
 
 prouter = Router()
+prouter.message.middleware(AntiFloodMiddleware())
+prouter.callback_query.middleware(AntiFloodMiddleware())
 prouter.callback_query.middleware(BansMiddleware())
 
 @prouter.callback_query(F.data=="profile")
 async def profile(callback: CallbackQuery):
-    user_data = await rq.get_user(callback.from_user.id)
-    rating = round(await rq.check_user_rating(callback.from_user.id), 2)
+    user_id = callback.from_user.id
+    user_data = await rq.get_user(user_id)
+    rating = round(await rq.check_user_rating(user_id), 2)
     for user in user_data:
-        await callback.message.edit_text(f"""📋 Профиль
-                                         
-🙋🏻‍♂️ Ваш ID: <code>{callback.from_user.id}</code>
+        await callback.message.edit_text(f"""<b>📋 Профиль</b>
+
+🗣 Ваше имя: <code>{user.name}</code>
+🙋🏻‍♂️ Ваш ID: <code>{user_id}</code>
 
 🏦 Ваш баланс: <code>{user.balance}</code>
 ⭐️ Ваша оценка: <code>{rating}</code>
 
 🤝 Количество сделок: <code>{user.deals_count}</code>
-👥 Количество рефералов: <code>{user.ref_count}</code>""", reply_markup=await ikb.profile(callback.from_user.id, user.balance))
+👥 Количество рефералов: <code>{user.ref_count}</code>""", reply_markup=await ikb.profile(user_id, user.balance))
+        
+@prouter.message(F.text=="👤 Профиль")
+async def profile(message: Message, state: FSMContext):
+    await state.clear()
+    user_id = message.from_user.id
+    user_data = await rq.get_user(user_id)
+    rating = round(await rq.check_user_rating(user_id), 2)
+    for user in user_data:
+        await message.answer(f"""<b>📋 Профиль</b>
+
+🗣 Ваше имя: <code>{user.name}</code>
+🙋🏻‍♂️ Ваш ID: <code>{user_id}</code>
+
+🏦 Ваш баланс: <code>{user.balance}</code>
+⭐️ Ваша оценка: <code>{rating}</code>
+
+🤝 Количество сделок: <code>{user.deals_count}</code>
+👥 Количество рефералов: <code>{user.ref_count}</code>""", reply_markup=await ikb.profile(user_id, user.balance))
         
 @prouter.callback_query(F.data=="referal_system")
 async def referal_system(callback: CallbackQuery, bot: Bot):

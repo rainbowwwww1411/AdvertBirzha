@@ -1,7 +1,9 @@
 from aiogram import Router, Bot, F
 from aiogram.types import CallbackQuery
+from antiflood import AntiFloodMiddleware
 
 drouter = Router()
+drouter.callback_query.middleware(AntiFloodMiddleware())
 
 @drouter.callback_query(F.data=='delete')
 async def delete(callback: CallbackQuery, bot: Bot):

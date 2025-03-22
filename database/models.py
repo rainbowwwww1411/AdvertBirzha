@@ -17,7 +17,8 @@ class User(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True)
     tg_id = mapped_column(BigInteger, unique=True)
-    name: Mapped[str] = mapped_column(String(300))
+    name: Mapped[str] = mapped_column(String(300), unique=True)
+    verified: Mapped[str] = mapped_column(String(300)) # True or False
     balance: Mapped[str] = mapped_column(String(300))
     deals_count: Mapped[str] = mapped_column(String(300))
     ref_count: Mapped[str] = mapped_column(String(300))
@@ -101,6 +102,7 @@ class withdraw(Base):
     tg_id = mapped_column(BigInteger)
     username: Mapped[str] = mapped_column(String(300))
     sum: Mapped[str] = mapped_column(String(300))
+    sum_last: Mapped[str] = mapped_column(String(300))
     currency: Mapped[str] = mapped_column(String(300))
     address: Mapped[str] = mapped_column(String(300))
     method: Mapped[str] = mapped_column(String(300))

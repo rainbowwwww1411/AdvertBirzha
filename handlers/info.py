@@ -1,15 +1,33 @@
 import inlineKeyboards.infoikb as ikb
 from inlineKeyboards.delete_message import delete_msg
 from aiogram import Router, F
+from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
 from settings import commission
+from antiflood import AntiFloodMiddleware
 
 irouter = Router()
+irouter.message.middleware(AntiFloodMiddleware())
+irouter.callback_query.middleware(AntiFloodMiddleware())
 
 @irouter.callback_query(F.data=='info')
 async def info(callback: CallbackQuery):
     await callback.message.edit_text(f"""<b>Биржа</b> для торговли рекламой внутри мессенджера Telegram.
+Мы предоставляем услуги гаранта при проведении сделок, а также мы поможем вам с закупом рекламы.
+
+<b>Наши преимущества:</b>
+
+🛡 Безопасность.
+💲 Низкая комиссия({commission}%).
+👥 Море трафика.
+
+Полезная информация:""", reply_markup=await ikb.info())
+    
+@irouter.message(F.text=='📚 Информация')
+async def info(message: Message, state: FSMContext):
+    await state.clear()
+    await message.answer(f"""<b>Биржа</b> для торговли рекламой внутри мессенджера Telegram.
 Мы предоставляем услуги гаранта при проведении сделок, а также мы поможем вам с закупом рекламы.
 
 <b>Наши преимущества:</b>

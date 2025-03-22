@@ -13,6 +13,7 @@ class get(StatesGroup):
     withdraw_crypto = State()
     withdraw_calc_sum = State()
     withdraw_address = State()
+    message_text = State()
     
 class BroadcastStates(StatesGroup):
     select_content_type = State()

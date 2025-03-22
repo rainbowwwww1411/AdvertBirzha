@@ -12,7 +12,7 @@ async def profile(tg_id, balance):
     if rating != 0:
         kb.add(InlineKeyboardButton(text="🗂 Показать отзывы", callback_data="show_reviews"))
     kb.add(InlineKeyboardButton(text="👥 Реферальная система", callback_data="referal_system"))
-    kb.add(InlineKeyboardButton(text="« Назад", callback_data="to_main"))
+    # kb.add(InlineKeyboardButton(text="« Назад", callback_data="to_main"))
     row.append(1)
     return kb.adjust(*row).as_markup()
 

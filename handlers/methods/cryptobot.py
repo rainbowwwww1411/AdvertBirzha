@@ -11,6 +11,7 @@ from ban import BansMiddleware
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 from datetime import datetime
+from antiflood import AntiFloodMiddleware
 
 cryptopay = AioCryptoPay(
     token=os.getenv("CRYPTOPAY_TOKEN"),
@@ -18,6 +19,8 @@ cryptopay = AioCryptoPay(
 )
 
 cbrouter = Router()
+cbrouter.message.middleware(AntiFloodMiddleware())
+cbrouter.callback_query.middleware(AntiFloodMiddleware())
 cbrouter.callback_query.middleware(BansMiddleware())
 
 @cbrouter.message(get.sum)

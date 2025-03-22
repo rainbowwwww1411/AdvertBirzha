@@ -14,6 +14,10 @@ adminrouter.callback_query.middleware(BansMiddleware())
 async def apanel(message: Message):
     await message.answer("Вы упешно вошли в Админ-панель", reply_markup=await ikb.apanel())
     
+@adminrouter.message(F.text=="💎 Админ-Панель", IsAdmin(ADMINS))
+async def apanel(message: Message):
+    await message.answer("Вы упешно вошли в Админ-панель", reply_markup=await ikb.apanel())
+    
 @adminrouter.callback_query(F.data=="to_apanel", IsAdmin2(ADMINS))
 async def apanel_callback(callback: CallbackQuery):
     await callback.message.edit_text("Вы упешно вошли в Админ-панель", reply_markup=await ikb.apanel())

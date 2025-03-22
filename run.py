@@ -19,7 +19,7 @@ from handlers.methods.crypto import nprouter, check_payments_task_np
 from handlers.methods.stars import psrouter
 from autoclean import auto_clean
 from ban import brouter
-
+from captcha import captcha_cleaner
 
 async def main():
     await async_main()
@@ -38,6 +38,7 @@ async def main():
         dp.include_router(wrouter)
         dp.include_router(adminrouter)
         dp.include_router(broadcastrouter)
+        asyncio.create_task(captcha_cleaner())
         asyncio.create_task(auto_clean())
         asyncio.create_task(check_payments_task())
         asyncio.create_task(check_payments_task_np())

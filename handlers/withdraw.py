@@ -8,8 +8,11 @@ from ban import BansMiddleware
 from settings import commission
 from check_ton_price import CoinGeckoAPI
 from withdraw_calculator import PaymentCalculator
+from antiflood import AntiFloodMiddleware
 
 wrouter = Router()
+wrouter.message.middleware(AntiFloodMiddleware())
+wrouter.callback_query.middleware(AntiFloodMiddleware())
 wrouter.callback_query.middleware(BansMiddleware())
 
 cg = CoinGeckoAPI()
@@ -69,7 +72,7 @@ async def withdraw_next(callback: CallbackQuery, state: FSMContext):
         for user in user_data:
             new_balance = float(user.balance) - float(data['withdraw_sum'])
             await rq.update_balance(callback.from_user.id, new_balance)
-        await rq.create_withdraw(callback.from_user.id, callback.from_user.username, data['withdraw_sum'], data['withdraw_crypto'], data['withdraw_method'], 'CryptoBot')
+        await rq.create_withdraw(callback.from_user.id, callback.from_user.username, data['withdraw_sum'], data['withdraw_calc_sum'], data['withdraw_crypto'], data['withdraw_method'], 'CryptoBot')
         await callback.message.edit_text("⌛️ Заявка на вывод добавлена.\nОжидайте, средства обычно выводятся до 24 часов. Бот вам отправит чек.", reply_markup=await ikb.back())
         await state.clear()
     elif data['withdraw_method'] == "TON":
@@ -92,6 +95,6 @@ async def withdraw_address(message: Message, state: FSMContext):
     for user in user_data:
         new_balance = float(user.balance) - float(data['withdraw_sum'])
         await rq.update_balance(message.from_user.id, new_balance)
-    await rq.create_withdraw(message.from_user.id, message.from_user.username, data['withdraw_sum'], data['withdraw_crypto'], data['withdraw_method'], message.text)
+    await rq.create_withdraw(message.from_user.id, message.from_user.username, data['withdraw_sum'], data['withdraw_calc_sum'], data['withdraw_crypto'], data['withdraw_method'], message.text)
     await message.answer("⌛️ Заявка на вывод добавлена.\nОжидайте, средства обычно выводятся до 24 часов.", reply_markup=await ikb.back())
     await state.clear()

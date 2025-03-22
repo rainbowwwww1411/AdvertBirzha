@@ -6,8 +6,11 @@ from aiogram.types import Message, LabeledPrice, PreCheckoutQuery
 from states import get
 from ban import BansMiddleware
 from datetime import datetime
+from antiflood import AntiFloodMiddleware
 
 psrouter = Router()
+psrouter.message.middleware(AntiFloodMiddleware())
+psrouter.callback_query.middleware(AntiFloodMiddleware())
 psrouter.callback_query.middleware(BansMiddleware())
 
 @psrouter.message(get.sum_stars)
