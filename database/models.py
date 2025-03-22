@@ -17,7 +17,7 @@ class User(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True)
     tg_id = mapped_column(BigInteger, unique=True)
-    name: Mapped[str] = mapped_column(String(300), unique=True)
+    name: Mapped[str] = mapped_column(String(300))
     verified: Mapped[str] = mapped_column(String(300)) # True or False
     balance: Mapped[str] = mapped_column(String(300))
     deals_count: Mapped[str] = mapped_column(String(300))
@@ -31,7 +31,6 @@ class BannedUser(Base):
     date: Mapped[str] = mapped_column(String(300)) # 00.00.0000 00:00
     reason: Mapped[str] = mapped_column(String(300))
 
-    
 class Post(Base):
     __tablename__ = 'posts'
     
