@@ -7,9 +7,15 @@ async def set_user(tg_id, invitefrom):
         user = await session.scalar(select(md.User).where(md.User.tg_id == tg_id))
         
         if not user:
-            session.add(md.User(tg_id=tg_id, invite_from=invitefrom, name='None', balance='0', deals_count='0', ref_count='0'))
+            session.add(md.User(tg_id=tg_id, invite_from=invitefrom, name='None', balance='0', deals_count='0', ref_count='0', verified='False'))
             await session.commit()
-            
+
+async def check_user(tg_id: int) -> bool:
+    async with async_session() as session:
+        stmt = select(exists().where(md.User.tg_id==tg_id))
+        reviews_bool = await session.scalar(stmt)
+        return reviews_bool
+
 async def get_users():
     async with async_session() as session:
         return await session.scalars(select(md.User))
@@ -99,7 +105,7 @@ async def check_invoice_id(invoice_id, method: str) -> bool:
         else:
             return True
         
-async def create_withdraw(tg_id, username: str, sum: str, currency: str, method: str, address: str) -> None:
+async def create_withdraw(tg_id, username: str, sum: str, sum_last: str, currency: str, method: str, address: str) -> None:
     async with async_session() as session:
-        session.add(md.withdraw(tg_id=tg_id, username=username, sum=sum, currency=currency, method=method, status="active", address=address))
+        session.add(md.withdraw(tg_id=tg_id, username=username, sum=sum, sum_last=sum_last, currency=currency, method=method, status="active", address=address))
         await session.commit()
