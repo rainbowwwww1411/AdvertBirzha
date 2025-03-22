@@ -2,6 +2,7 @@ import database.requests as rq
 import os
 from aiocryptopay import AioCryptoPay, Networks
 import inlineKeyboards.profileikb as ikb
+from inlineKeyboards.check_reviewsikb import generate_keyboard
 from aiogram import Router, Bot, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
@@ -78,7 +79,19 @@ async def pay(callback: CallbackQuery, state: FSMContext):
         await callback.message.edit_text("Введите сумму для оплаты в рублях (минимально 100руб):", reply_markup=await ikb.back())
         await state.set_state(get.sum_stars)
 
-
+@prouter.callback_query(F.data.startswith("page_"))
+async def pagination_handler(callback: CallbackQuery):
+    page = int(callback.data.split("_")[1])
+    
+    if page == 0:
+        await callback.message.edit_text("Ваши отзывы:",
+        reply_markup=await generate_keyboard(tg_id=callback.from_user.id)
+    )
+    else:
+        await callback.message.edit_reply_markup(
+            reply_markup=await generate_keyboard(tg_id=callback.from_user.id, current_page=page)
+        )
+        await callback.answer()
 
 
 
