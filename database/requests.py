@@ -1,6 +1,6 @@
 from database.models import async_session, engine
 import database.models as md
-from sqlalchemy import select, delete, update, exists
+from sqlalchemy import select, delete, update, exists, func
 
 async def set_user(tg_id, invitefrom):
     async with async_session() as session:
@@ -13,14 +13,16 @@ async def set_user(tg_id, invitefrom):
 async def check_user(tg_id: int) -> bool:
     async with async_session() as session:
         stmt = select(exists().where(md.User.tg_id==tg_id))
-        reviews_bool = await session.scalar(stmt)
-        return reviews_bool
+        bool = await session.scalar(stmt)
+        return bool
     
 async def check_name(name: str) -> bool:
     async with async_session() as session:
-        stmt = select(exists().where(md.User.name==name))
-        reviews_bool = await session.scalar(stmt)
-        return reviews_bool
+        name_normalized = name.strip().lower()
+        stmt = select(exists().where(md.User.name.ilike(name_normalized)))
+        bool = await session.scalar(stmt)
+        print(bool)
+        return bool
 
 async def get_users():
     async with async_session() as session:

@@ -20,6 +20,7 @@ srouter.message.middleware(AntiFloodMiddleware())
 async def start(message: Message, state: FSMContext):
     user_id = message.from_user.id
     check_user = await rq.check_user(user_id)
+    await state.clear()
     if not check_user:
         await state.update_data(message_text=message.text)
         category = random.choice(list(emoji_db.keys()))
@@ -53,9 +54,15 @@ async def start(message: Message, state: FSMContext):
             reply_markup=builder.as_markup()
         )
     else:
-        await state.clear()
-        await message.answer("🚀")
-        await message.answer("Покупайте и продавайте рекламу безопасно и автоматически с нашим сервисом.\n\nПодписывайтесь на наш канал и вступайте в наш чат.", reply_markup=kb.start(user_id))
+        user_data = await rq.get_user(user_id)
+        for user in user_data:
+            if user.name != 'None':
+                await message.answer("🚀")
+                await message.answer("Покупайте и продавайте рекламу безопасно и автоматически с нашим сервисом.\n\nПодписывайтесь на наш канал и вступайте в наш чат.", reply_markup=kb.start(user_id))
+            else:
+                await message.answer("Введите ваше имя/псевдоним (не более 10 символов, а также будет выдаваться бан за мат/ругань и т.д.):")
+                await state.set_state(get.name)
+                
         
 @srouter.callback_query(F.data.startswith("captcha_"))
 async def check_captcha(callback: CallbackQuery, state: FSMContext):
@@ -100,7 +107,7 @@ async def getname(message: Message, state: FSMContext):
     user_id = message.from_user.id
     if len(message.text) <=10 and message.text != 'None':
         check_name = await rq.check_name(message.text)
-        if check_name:
+        if not check_name:
             await rq.upd_name(message.from_user.id, message.text)
         else:
             await message.answer("Это имя уже занято. Введите ваше имя/псевдоним (не более 10 символов, а также будет выдаваться бан за мат/ругань и т.д.):")
