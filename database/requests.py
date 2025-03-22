@@ -117,3 +117,15 @@ async def create_withdraw(tg_id, username: str, sum: str, sum_last: str, currenc
     async with async_session() as session:
         session.add(md.withdraw(tg_id=tg_id, username=username, sum=sum, sum_last=sum_last, currency=currency, method=method, status="active", address=address))
         await session.commit()
+        
+async def get_withdraws():
+    async with async_session() as session:
+        return await session.scalars(select(md.withdraw).where(md.withdraw.status=="active"))
+    
+async def get_withdraw(id):
+    async with async_session() as session:
+        return await session.scalars(select(md.withdraw).where(md.withdraw.id==id))
+    
+async def update_status_withdraw(id, status):
+    async with engine.begin() as conn:
+        await conn.execute(update(md.withdraw).where(md.withdraw.id==id).values(status=status))

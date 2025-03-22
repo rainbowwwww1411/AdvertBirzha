@@ -15,6 +15,11 @@ class get(StatesGroup):
     withdraw_address = State()
     message_text = State()
     
+class WithdrawStates(StatesGroup):
+    withdraw_id = State()
+    message_text_approve = State()
+    message_text_decline = State()
+    
 class BroadcastStates(StatesGroup):
     select_content_type = State()
     receive_text = State()

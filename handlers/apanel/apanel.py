@@ -15,7 +15,7 @@ async def apanel(message: Message):
     await message.answer("Вы упешно вошли в Админ-панель", reply_markup=await ikb.apanel())
     
 @adminrouter.message(F.text=="💎 Админ-Панель", IsAdmin(ADMINS))
-async def apanel(message: Message):
+async def apanel2(message: Message):
     await message.answer("Вы упешно вошли в Админ-панель", reply_markup=await ikb.apanel())
     
 @adminrouter.callback_query(F.data=="to_apanel", IsAdmin2(ADMINS))
@@ -26,3 +26,6 @@ async def apanel_callback(callback: CallbackQuery):
 async def send_msgs(callback: CallbackQuery):
     await callback.message.edit_text("Выберите тип рассылки:", reply_markup=await ikb.send_msgs())
 
+@adminrouter.callback_query(F.data=="check_withdraws", IsAdmin2(ADMINS))
+async def check_withdraws(callback: CallbackQuery):
+    await callback.message.edit_text("Все объявления на вывод:", reply_markup=await ikb.check_withdraws())

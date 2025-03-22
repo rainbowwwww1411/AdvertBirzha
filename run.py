@@ -14,6 +14,7 @@ from handlers.info import irouter
 from handlers.delete import drouter
 from handlers.apanel.apanel import adminrouter
 from handlers.apanel.broadcast import broadcastrouter
+from handlers.apanel.withdraw_requests import chwrouter
 from handlers.methods.cryptobot import cbrouter, check_payments_task
 from handlers.methods.crypto import nprouter, check_payments_task_np
 from handlers.methods.stars import psrouter
@@ -38,6 +39,7 @@ async def main():
         dp.include_router(wrouter)
         dp.include_router(adminrouter)
         dp.include_router(broadcastrouter)
+        dp.include_router(chwrouter)
         asyncio.create_task(captcha_cleaner())
         asyncio.create_task(auto_clean())
         asyncio.create_task(check_payments_task())
