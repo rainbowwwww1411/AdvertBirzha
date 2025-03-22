@@ -10,7 +10,7 @@ from function.ban import BansMiddleware
 from function.admin import IsAdmin2
 from settings import ADMINS
 from datetime import datetime
-from aiogram.exceptions import TelegramRetryAfter, TelegramForbiddenError
+from aiogram.exceptions import TelegramRetryAfter
 
 broadcastrouter = Router()
 broadcastrouter.callback_query.middleware(BansMiddleware())

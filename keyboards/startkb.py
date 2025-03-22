@@ -1,5 +1,5 @@
 from aiogram.types import KeyboardButton
-from aiogram.utils.keyboard import KeyboardBuilder, ReplyKeyboardBuilder
+from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from settings import ADMINS
 
 def start(tg_id):

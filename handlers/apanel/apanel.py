@@ -1,4 +1,3 @@
-import database.requests as rq
 import inlineKeyboards.adminikb as ikb
 from aiogram import Router, F
 from aiogram.types import CallbackQuery, Message

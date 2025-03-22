@@ -1,5 +1,3 @@
-import asyncio
-import re
 from states import WithdrawStates
 import database.requests as rq
 import inlineKeyboards.adminikb as ikb
@@ -9,7 +7,6 @@ from aiogram.types import CallbackQuery, Message
 from function.ban import BansMiddleware
 from function.admin import IsAdmin2
 from settings import ADMINS
-from datetime import datetime
 
 chwrouter = Router()
 chwrouter.callback_query.middleware(BansMiddleware())
