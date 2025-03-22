@@ -1,3 +1,3 @@
-![Снимок экрана 2025-03-21 201730](https://github.com/user-attachments/assets/e2bce1f3-8bac-4ed2-b6b4-2d0f1217f8fe)
+![Снимок экрана 2025-03-22 142107](https://github.com/user-attachments/assets/a3388e32-644d-4567-ac38-b669eb5c492e)
 
 вот ета должно получится там будет отмечено галочками че как 
