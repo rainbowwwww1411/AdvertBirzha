@@ -61,7 +61,6 @@ async def withdraw_choice(callback: CallbackQuery, state: FSMContext):
     await state.set_state(get.withdraw_sum)
     await callback.message.edit_text(f"Введите сумму вывода в RUB.\nНа вывод действует комиссия сервиса {commission}%. Подробнее про комиссии /rules.", reply_markup=await ikb.to_withdraw())
 
-  
 @wrouter.callback_query(F.data=="withdraw_next")
 async def withdraw_next(callback: CallbackQuery, state: FSMContext):
     data = await state.get_data()
