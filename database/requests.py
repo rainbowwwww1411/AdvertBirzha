@@ -15,6 +15,12 @@ async def check_user(tg_id: int) -> bool:
         stmt = select(exists().where(md.User.tg_id==tg_id))
         reviews_bool = await session.scalar(stmt)
         return reviews_bool
+    
+async def check_name(name: str) -> bool:
+    async with async_session() as session:
+        stmt = select(exists().where(md.User.name==name))
+        reviews_bool = await session.scalar(stmt)
+        return reviews_bool
 
 async def get_users():
     async with async_session() as session:

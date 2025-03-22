@@ -99,9 +99,10 @@ async def check_captcha(callback: CallbackQuery, state: FSMContext):
 async def getname(message: Message, state: FSMContext):
     user_id = message.from_user.id
     if len(message.text) <=10 and message.text != 'None':
-        try:
+        check_name = await rq.check_name(message.text)
+        if check_name:
             await rq.upd_name(message.from_user.id, message.text)
-        except:
+        else:
             await message.answer("Это имя уже занято. Введите ваше имя/псевдоним (не более 10 символов, а также будет выдаваться бан за мат/ругань и т.д.):")
             await state.set_state(get.name)
             return
